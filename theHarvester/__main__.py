@@ -224,7 +224,9 @@ async def start(rest_args: argparse.Namespace | None = None):
     try:
         db = stash.StashManager()
         await db.do_init()
-    except Exception:
+    except (AttributeError, OSError, RuntimeError, ValueError) as init_error:
+        if not args.quiet:
+            print(f'Error initializing StashManager: {init_error}')
         raise ValueError('Failed to initialize StashManager')
 
     if len(filename) > 0:
@@ -264,7 +266,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                     try:
                         _ = netaddr.IPAddress(line)
                         final_dns_resolver_list.append(line)
-                    except Exception as e:
+                    except (netaddr.core.AddrFormatError, ValueError, TypeError) as e:
                         print(f'An exception has occurred while reading from: {dnsresolve}, {e}')
                         print(f'Current line: {line}')
         else:
@@ -277,7 +279,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                     # Verify user passed in an IP; this does not validate resolver behavior
                     _ = netaddr.IPAddress(item)
                     final_dns_resolver_list.append(item)
-                except Exception as e:
+                except (netaddr.core.AddrFormatError, ValueError, TypeError) as e:
                     print(f'Passed DNS resolver is invalid, skipping: {item} ({e})')
 
         # if for some reason, there are duplicates
@@ -1262,7 +1264,7 @@ async def start(rest_args: argparse.Namespace | None = None):
         elif rest_args is not None:
             try:
                 rest_args.dns_brute
-            except Exception:
+            except AttributeError:
                 print('\n[!] Invalid source.\n')
                 sys.exit(1)
         else:
@@ -1384,7 +1386,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                         ip_list.append(str(netaddr.IPNetwork(ip)))
                     else:
                         ip_list.append(str(netaddr.IPAddress(ip)))
-            except Exception as e:
+            except (netaddr.core.AddrFormatError, ValueError, TypeError) as e:
                 print(f'An exception has occurred while adding: {ip} to ip_list: {e}')
                 continue
         ip_list = list(sorted(ip_list))
@@ -1437,7 +1439,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                     if ':' in host:
                         _, addr = host.split(':', 1)
                         await db.store(word, addr, 'ip', 'DNS-resolver')
-                except Exception as e:
+                except (OSError, RuntimeError, ValueError, TypeError) as e:
                     print(f'An exception has occurred while attempting to insert: {host} IP into DB: {e}')
                     continue
         else:
@@ -1635,7 +1637,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                 # TODO add Shodan output into XML report
                 file.write('</theHarvester>')
                 print('[*] XML File saved.')
-        except Exception as error:
+        except (OSError, ValueError, TypeError, UnicodeEncodeError) as error:
             print(f'[!] An error occurred while saving the XML file: {error}')
 
         try:
@@ -1693,7 +1695,7 @@ async def start(rest_args: argparse.Namespace | None = None):
                 dumped_json = ujson.dumps(json_dict, sort_keys=True)
                 fp.write(dumped_json)
             print('[*] JSON File saved.')
-        except Exception as er:
+        except (OSError, ValueError, TypeError, UnicodeEncodeError) as er:
             print(f'[!] An error occurred while saving the JSON file: {er} ')
         print('\n\n')
 
