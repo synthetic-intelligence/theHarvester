@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [4.10.1] - 2026-02-22
 
 ### Changed
@@ -13,8 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored async file handling in CLI paths: replace blocking path calls with awaited operations and improve path sanitization ([e98bf5bb](https://github.com/laramies/theHarvester/commit/e98bf5bb), [607016a1](https://github.com/laramies/theHarvester/commit/607016a1)).
 - Migrated packaging/build configuration to `flit-core` and updated entrypoint/version wiring ([d2cae0be](https://github.com/laramies/theHarvester/commit/d2cae0be)).
 - Refactored and standardized output utilities, with new regression tests for output formatting and dedup helpers ([fa2dedd3](https://github.com/laramies/theHarvester/commit/fa2dedd3)).
-- Updated dependencies: bump `fastapi`, `playwright`, `ruff`, and `ty` ([1dfa6e98](https://github.com/laramies/theHarvester/commit/1dfa6e98)).
-- Updated packaging dependency `wheel` to `0.46.2` ([56afc55b](https://github.com/laramies/theHarvester/commit/56afc55b)).
+- Updated dependencies: bump `fastapi`, `playwright`, `ruff`, `ty`, and `uvicorn` ([1dfa6e98](https://github.com/laramies/theHarvester/commit/1dfa6e98), [46865337](https://github.com/laramies/theHarvester/commit/46865337), [c1ac137d](https://github.com/laramies/theHarvester/commit/c1ac137d), [7eaec4da](https://github.com/laramies/theHarvester/commit/7eaec4da)).
+- Updated packaging dependency `wheel` to `0.46.3` ([46865337](https://github.com/laramies/theHarvester/commit/46865337)).
 
 ### Fixed
 - Fixed CriminalIP integration for current API behavior, including safer scan/report handling and hostname normalization (issue #2229) ([06c2fbd9](https://github.com/laramies/theHarvester/commit/06c2fbd9)).
@@ -47,5 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Improve input sanitization and add security-focused tests ([3d7489c9](https://github.com/laramies/theHarvester/commit/3d7489c9)).
 
-[4.10.1]: https://github.com/laramies/theHarvester/compare/ffe1f3a8...HEAD
-[4.10.0]: https://github.com/laramies/theHarvester/compare/422d62c2...ffe1f3a8
+[Unreleased]: https://github.com/laramies/theHarvester/compare/06520b40...master
+[4.10.1]: https://github.com/laramies/theHarvester/compare/4.10.0...06520b40
+[4.10.0]: https://github.com/laramies/theHarvester/compare/4.9.2...4.10.0
